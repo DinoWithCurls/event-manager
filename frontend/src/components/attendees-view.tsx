@@ -11,7 +11,9 @@ import { Label } from "@/components/ui/label"
 import { ArrowLeftIcon, PlusIcon, CalendarIcon, MapPinIcon, UsersIcon } from "lucide-react"
 import { toast } from "sonner"
 import { fetchEvents, fetchEventAttendees, registerAttendee } from "@/lib/api"
-import type { Event, Attendee, CreateAttendeeData } from "@/lib/types"
+import type { Event, Attendee, CreateAttendeeData, ValidationError } from "@/lib/types"
+import { validateAttendeeData } from "@/lib/validators"
+import { getFieldError } from "@/lib/helpers"
 
 interface AttendeesViewProps {
   eventId: number
@@ -26,9 +28,10 @@ export function AttendeesView({ eventId, onBack }: AttendeesViewProps) {
   const [registrationData, setRegistrationData] = useState<CreateAttendeeData>({
     name: "",
     email: "",
-    event_id: 0
+    event_id: eventId
   })
   const [isRegistering, setIsRegistering] = useState(false)
+  const [errors, setErrors] = useState<ValidationError[]>([]);
 
   const loadData = async () => {
     try {
@@ -51,6 +54,12 @@ export function AttendeesView({ eventId, onBack }: AttendeesViewProps) {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
+    const validationErrors = validateAttendeeData(registrationData)
+    if (validationErrors.length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+    setErrors([])
     setIsRegistering(true)
     try {
       await registerAttendee(eventId, registrationData)
@@ -65,10 +74,14 @@ export function AttendeesView({ eventId, onBack }: AttendeesViewProps) {
     }
   }
 
+  const handleChange = (field: keyof CreateAttendeeData, value: string | number) => {
+    setRegistrationData((prev) => ({...prev, [field]: value}))
+    setErrors((prev) => prev.filter((error) => error.field != field));
+  }
+
   const formatDateTime = (dateTime: string) => {
     return new Date(dateTime).toLocaleString()
   }
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -200,9 +213,10 @@ export function AttendeesView({ eventId, onBack }: AttendeesViewProps) {
                 type="text"
                 placeholder="Enter attendee name"
                 value={registrationData.name}
-                onChange={(e) => setRegistrationData((prev) => ({ ...prev, name: e.target.value }))}
+                onChange={(e) => handleChange("name", e.target.value)}
                 required
               />
+              {getFieldError("name", errors) && <p className="text-sm text-red-600">{getFieldError("name", errors)}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email *</Label>
@@ -211,9 +225,10 @@ export function AttendeesView({ eventId, onBack }: AttendeesViewProps) {
                 type="email"
                 placeholder="Enter attendee email"
                 value={registrationData.email}
-                onChange={(e) => setRegistrationData((prev) => ({ ...prev, email: e.target.value }))}
+                onChange={(e) => handleChange("email", e.target.value)}
                 required
               />
+              {getFieldError("email", errors) && <p className="text-sm text-red-600">{getFieldError("email", errors)}</p>}
             </div>
             <div className="flex gap-2 pt-4">
               <Button type="submit" disabled={isRegistering} className="flex-1">

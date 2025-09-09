@@ -5,8 +5,10 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import type { CreateEventData } from "@/lib/types"
+import type { CreateEventData, ValidationError } from "@/lib/types"
 import { CalendarIcon, MapPinIcon, UsersIcon } from "lucide-react"
+import { validateEventData } from "@/lib/validators"
+import { getFieldError } from "@/lib/helpers"
 
 interface EventFormProps {
   onSubmit: (data: CreateEventData) => Promise<void>
@@ -22,9 +24,16 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
     max_capacity: 50,
   })
   const [isLoading, setIsLoading] = useState(false)
+  const [errors, setErrors] = useState<ValidationError[]>([])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const validationErrors = validateEventData(formData)
+    if (validationErrors.length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+    setErrors([])
     setIsLoading(true)
     try {
       await onSubmit(formData)
@@ -35,6 +44,7 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
 
   const handleChange = (field: keyof CreateEventData, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
+    setErrors((prev) => prev.filter((error) => error.field !== field))
   }
 
   const today = new Date().toISOString().slice(0, 16)
@@ -51,8 +61,8 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
           onChange={(e) => handleChange("name", e.target.value)}
           required
         />
+        {getFieldError("name", errors) && <p className="text-sm text-red-600">{getFieldError("name", errors)}</p>}
       </div>
-
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="start_time" className="flex items-center gap-2">
@@ -67,6 +77,7 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
             min={today}
             required
           />
+          {getFieldError("start_time", errors) && <p className="text-sm text-red-600">{getFieldError("start_time", errors)}</p>}
         </div>
 
         <div className="space-y-2">
@@ -83,6 +94,7 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
             required
           />
         </div>
+        {getFieldError("end_time", errors) && <p className="text-sm text-red-600">{getFieldError("end_time", errors)}</p>}
       </div>
 
       <div className="space-y-2">
@@ -98,6 +110,7 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
           onChange={(e) => handleChange("location", e.target.value)}
           required
         />
+        {getFieldError("location", errors) && <p className="text-sm text-red-600">{getFieldError("location", errors)}</p>}
       </div>
 
       <div className="space-y-2">
@@ -114,6 +127,7 @@ export function EventForm({ onSubmit, onCancel }: EventFormProps) {
           onChange={(e) => handleChange("max_capacity", Number.parseInt(e.target.value) || 0)}
           required
         />
+        {getFieldError("max_capacity", errors) && <p className="text-sm text-red-600">{getFieldError("max_capacity", errors)}</p>}
       </div>
 
       <div className="flex gap-2 pt-4">
