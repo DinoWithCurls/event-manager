@@ -1,10 +1,25 @@
 from fastapi import FastAPI
-from app.apis import router
 from app.config.db import engine, Base
 from sqlalchemy import text
 import pathlib
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="Event Manager")
+
+origins = [
+    "http://localhost:3000",   # Next.js frontend
+    "http://127.0.0.1:3000",   # Sometimes browsers resolve localhost this way
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # or ["*"] for all
+    allow_credentials=True,
+    allow_methods=["*"],            # allow all methods (GET, POST, etc.)
+    allow_headers=["*"],            # allow all headers
+)
+
+from app.apis import router
 app.include_router(router)
 
 # Path to seeds folder
