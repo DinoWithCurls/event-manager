@@ -1,0 +1,10 @@
+insert into events (id, name, location, start_time, end_time, max_capacity) values (1, 'company retreat', 'Rousínov', '2025-10-27 14:21:54', '2025-09-15 07:00:33', 9);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (2, 'birthday party', 'Ravne na Koroškem', '2025-10-06 13:53:09', '2025-09-19 20:13:55', 10);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (3, 'company retreat', 'Jinhe', '2025-09-25 22:13:47', '2025-10-31 21:24:04', 7);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (4, 'graduation celebration', 'Yasynuvata', '2025-10-05 23:26:54', '2025-12-04 01:29:34', 8);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (5, 'company retreat', 'Linqu', '2025-09-25 10:15:28', '2025-09-27 03:22:27', 5);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (6, 'wedding ceremony', 'Konde', '2025-11-10 13:54:38', '2025-09-19 17:23:29', 6);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (7, 'graduation celebration', 'Dardhas', '2025-11-07 18:39:45', '2025-12-11 09:53:43', 6);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (8, 'birthday party', 'Nakano', '2025-09-24 22:29:31', '2025-09-24 19:14:18', 9);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (9, 'company retreat', 'Jaroměřice nad Rokytnou', '2025-11-26 21:41:28', '2025-12-08 03:04:15', 8);
+insert into events (id, name, location, start_time, end_time, max_capacity) values (10, 'graduation celebration', 'Binulasan', '2025-09-12 23:04:14', '2025-10-26 12:41:49', 10);

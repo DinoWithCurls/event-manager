@@ -1,0 +1,33 @@
+# ---- Python / Backend ----
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+.env.*
+.venv/
+venv/
+virtual/
+*.log
+
+# ---- Node / Frontend ----
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.*
+
+# ---- Docker ----
+*.pid
+*.seed
+*.pid.lock
+db_data/
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/

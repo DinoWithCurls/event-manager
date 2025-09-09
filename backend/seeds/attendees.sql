@@ -1,0 +1,10 @@
+insert into attendees (id, name, email, event_id) values (1, 'Hagen Boughtflower', 'hboughtflower0@umich.edu', 8);
+insert into attendees (id, name, email, event_id) values (2, 'Ofella Haysman', 'ohaysman1@so-net.ne.jp', 3);
+insert into attendees (id, name, email, event_id) values (3, 'Maurene O'' Concannon', 'mo2@prweb.com', 2);
+insert into attendees (id, name, email, event_id) values (4, 'Gabbi Curds', 'gcurds3@irs.gov', 2);
+insert into attendees (id, name, email, event_id) values (5, 'Orbadiah Bargery', 'obargery4@plala.or.jp', 8);
+insert into attendees (id, name, email, event_id) values (6, 'Marina Bleibaum', 'mbleibaum5@usatoday.com', 6);
+insert into attendees (id, name, email, event_id) values (7, 'Stillman Slayford', 'sslayford6@wix.com', 5);
+insert into attendees (id, name, email, event_id) values (8, 'Jessamyn Ondrus', 'jondrus7@comcast.net', 5);
+insert into attendees (id, name, email, event_id) values (9, 'Berti Petruskevich', 'bpetruskevich8@irs.gov', 1);
+insert into attendees (id, name, email, event_id) values (10, 'Prissie Gowans', 'pgowans9@nhs.uk', 2);
